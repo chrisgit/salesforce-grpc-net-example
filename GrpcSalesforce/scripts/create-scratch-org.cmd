@@ -1,0 +1,1 @@
+sfdx force:org:create --setalias="grpc-example" --durationdays=7 --definitionfile="%~dp0/../config/project-scratch-def.json" --nonamespace --setdefaultusername
