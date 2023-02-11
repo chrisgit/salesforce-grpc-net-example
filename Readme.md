@@ -23,7 +23,7 @@ Example contains two project
 - .Net/C# project that subscribes to the Platform event Simple_Event__e
 
 To use the example
-- create a scratch org and push the code; more information is contained in the GrpcSalesforce [readme](./GrpcSalesforce/README.md)
+- create a scratch org and push the code; more information is contained in the GrpcSalesforce [readme](./GrpcSalesforce/Readme.md)
 - using SFDX obtain an access token, instance url and tenant id; run the solution and generate a platform event; more information is contained in the GrpcSalesforceClinet [readme](./GrpcSalesforceClient/Readme.md)
 
 Note: it is unlikely that this project will be maintained, it is just here to act as an example and purpose of being a short term reference!
