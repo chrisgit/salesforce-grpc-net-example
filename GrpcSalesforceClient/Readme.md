@@ -35,6 +35,15 @@ After building or running you will be able to see the code generated from the pr
 The program is a console app, the program creates a channel, subscribes to a top and wait for a messages ot times out if none have been received. While the program is running and after the console has displayed "Subscribing to topic and waiting for event ...", open Salesforce and publish a platform event. The event information should then be displayed in the console.
 
 ## Salesforce gRPC platform event messages
-Included in the project folder is an [example of the current message structure](example-payload.json) of a Salesforce platform event when using gRPC. All of the information apart from the event payload is plain text and can be easily read. The payload itself is in binary encoded [Avro format](https://avro.apache.org/) and is described in the [Salesforce documentation](https://developer.salesforce.com/docs/platform/pub-sub-api/guide/event-avro-serialization.html). Therefore if you convert the event payload value to UTF8 string or use ToByteArray you are likely to get unexpected results. To help with the de-serialisation I have included a simple to use library to help [converting to and from Avro format](https://github.com/AdrianStrugala/AvroConvert); I choose this library as the author has made it very simple to use and supplimented the code with a helpful write up on [c-sharpcorner](https://www.c-sharpcorner.com/article/how-to-work-with-avro-data-type-in-net-environment/). The POCO (Simple_Event__e) used to store the deserialise message was created using this library.
- 
+Included in the project folder is an [example of the current message structure](example-payload.json) of a Salesforce platform event when using gRPC. All of the information apart from the event payload is plain text and can be easily read. The payload itself is in binary encoded [Avro format](https://avro.apache.org/) and is described in the [Salesforce documentation](https://developer.salesforce.com/docs/platform/pub-sub-api/guide/event-avro-serialization.html). Therefore if you convert the event payload value to UTF8 string or use ToByteArray and Text encoder you are likely to get unexpected results.
+
+To help with the de-serialisation of the payload property I have referenced a simple to use library to [convert to and from Avro format](https://github.com/AdrianStrugala/AvroConvert); I choose this library as the author has made it very simple to use and supplimented the code with a helpful write up on [c-sharpcorner](https://www.c-sharpcorner.com/article/how-to-work-with-avro-data-type-in-net-environment/). The POCO (Simple_Event__e) used to store the deserialise message was created using this library. 
+
+In order to see the Topic schema and generated POCO (or to generate your own POCOs from your events) open [Program.cs](./Program.cs) and set the following variables to true
+
+```C#
+var viewSchema = false;
+var viewGeneratedModel = false;
+```
+
 
