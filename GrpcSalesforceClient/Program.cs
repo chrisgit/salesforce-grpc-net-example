@@ -3,14 +3,16 @@ using Grpc.Net.Client;
 using GrpcSalesforceClient;
 using SolTechnology.Avro;
 
+var salesForceGrpcAddress = "https://api.pubsub.salesforce.com:7443";
+var topicName = "/event/Simple_Event__e";
+
 var viewSchema = false;
 var viewGeneratedModel = false;
+
 // Information obtained from SFDX
 var accessToken = ""; // <== Replace with your access token
 var instanceUrl = ""; // <== Replace with your instance URL, i.e. https://your-org.my.salesforce.com
 var tenantId = ""; // <== Replace with your tenantId
-var salesForceGrpcAddress = "https://api.pubsub.salesforce.com:7443";
-var topicName = "/event/Simple_Event__e";
 
 if (string.IsNullOrEmpty(accessToken) || string.IsNullOrEmpty(instanceUrl) || string.IsNullOrEmpty(tenantId))
 {
@@ -33,18 +35,18 @@ var channel = GrpcChannel.ForAddress(salesForceGrpcAddress, new GrpcChannelOptio
 });
 
 var client = new GrpcSalesforceClient.PubSub.PubSubClient(channel);
-Console.WriteLine($"Created grpc channel {channel.Target} ({channel.State})");
+Console.WriteLine($"Created grpc channel [{channel.Target}] ({channel.State})");
 
-Console.WriteLine($"Requesting topic {topicName}");
+Console.WriteLine($"Requesting topic [{topicName}]");
 var topicRequest = new TopicRequest { TopicName = topicName };
 var topicInfo = client.GetTopic(topicRequest);
 if (topicInfo.CanSubscribe)
 {
-    Console.WriteLine($"Can subscribe to {topicInfo.TopicName}");
+    Console.WriteLine($"Can subscribe to [{topicInfo.TopicName}]");
 }
 else
 {
-    Console.WriteLine($"Cannot subscribe to {topicInfo.TopicName}");
+    Console.WriteLine($"Cannot subscribe to [{topicInfo.TopicName}]");
     return;
 }
 
@@ -57,8 +59,6 @@ if (viewSchema)
 
 if (viewGeneratedModel)
 {
-    var avroSchema = AvroConvert.Json2Avro(schemaInfo.SchemaJson);
-    var schema = AvroConvert.GetSchema(avroSchema);
     var model = AvroConvert.GenerateModel(schemaInfo.SchemaJson);
     Console.WriteLine(model);
 }
